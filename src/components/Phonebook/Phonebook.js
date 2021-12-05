@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './Phonebook';
 import Contacts from './Contacts';
 import AddContact from './AddContact';
+import Filter from './Filter';
 
 class Phonebook extends Component {
   state = {
@@ -15,17 +16,33 @@ class Phonebook extends Component {
   };
 
   handleAddContact = ({ id, name, number }) => {
+    const { contacts } = this.state;
     this.setState({
-      contacts: [...this.state.contacts, { id, name, number }],
+      contacts: [...contacts, { id, name, number }],
     });
   };
 
+  handleOnFiler = event => {
+    this.setState({ filter: event.target.value });
+  };
+
+  getContacts() {
+    const { contacts, filter } = this.state;
+    const filterLC = filter.toLowerCase();
+    return contacts.filter(contactItem => contactItem.name.toLowerCase().includes(filterLC));
+  }
+
   render() {
+    const { filter } = this.state;
+    const contacts = this.getContacts();
+
     return (
       <div className={styles.componenet}>
-        <h2>Phonebook</h2>
+        <h1>Phonebook</h1>
         <AddContact onSubmit={this.handleAddContact} />
-        <Contacts contctsList={this.state.contacts} />
+        <Filter filter={filter} onChange={this.handleOnFiler} />
+        <h2>Contacts</h2>
+        <Contacts contctsList={contacts} />
       </div>
     );
   }
