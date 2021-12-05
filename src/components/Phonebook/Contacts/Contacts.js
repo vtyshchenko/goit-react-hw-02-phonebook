@@ -6,7 +6,9 @@ function Contacts({ contctsList }) {
       <h2>Contacts</h2>
       <ul>
         {contctsList.map(contactsItem => (
-          <li key={contactsItem.id}>{contactsItem.name}</li>
+          <li key={contactsItem.id}>
+            {contactsItem.name}: {contactsItem.number}
+          </li>
         ))}
       </ul>
     </>
