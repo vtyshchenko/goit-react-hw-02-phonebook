@@ -17,19 +17,30 @@ class Phonebook extends Component {
 
   handleAddContact = ({ id, name, number }) => {
     const { contacts } = this.state;
-    this.setState({
-      contacts: [...contacts, { id, name, number }],
-    });
+    const filterLC = name.toLowerCase();
+    const res = this.getFilteredContacts(filterLC, contacts);
+    console.log(res);
+    if (res) {
+      alert(`${name} is alredy in contacts`);
+    } else {
+      this.setState({
+        contacts: [...contacts, { id, name, number }],
+      });
+    }
   };
 
   handleOnFiler = event => {
     this.setState({ filter: event.target.value });
   };
 
+  getFilteredContacts(filterLC, contacts) {
+    return contacts.filter(contactItem => contactItem.name.toLowerCase().includes(filterLC));
+  }
+
   getContacts() {
     const { contacts, filter } = this.state;
     const filterLC = filter.toLowerCase();
-    return contacts.filter(contactItem => contactItem.name.toLowerCase().includes(filterLC));
+    return this.getFilteredContacts(filterLC, contacts);
   }
 
   render() {
