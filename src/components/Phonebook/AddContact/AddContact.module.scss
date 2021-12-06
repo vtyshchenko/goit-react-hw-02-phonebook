@@ -1,0 +1,36 @@
+@import '../variables.scss';
+
+.form {
+  display: block;
+  border-top: 2px $button-bg-color solid;
+  border-bottom: 2px $button-bg-color solid;
+  margin-bottom: 20px;
+  padding: 10px 0;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 10px;
+  color: $label-color;
+}
+
+.button {
+  padding-left: 3px;
+  width: 120px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: $button-bg-color;
+  color: $button-color;
+
+  &:hover,
+  &:focus {
+    box-shadow: $shadow-button;
+    background-color: $button-active-bg-color;
+  }
+}

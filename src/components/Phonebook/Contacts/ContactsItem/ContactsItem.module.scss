@@ -1,0 +1,15 @@
+@import '../../variables.scss';
+
+.button {
+  background-color: $button-bg-color;
+  color: $button-color;
+  padding: 5px 15px;
+  border-radius: 5px;
+  font-weight: 500;
+
+  &:hover,
+  &:focus {
+    box-shadow: $shadow-button;
+    background-color: $button-active-bg-color;
+  }
+}

@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 
 import Phonebook from './components/Phonebook';
 

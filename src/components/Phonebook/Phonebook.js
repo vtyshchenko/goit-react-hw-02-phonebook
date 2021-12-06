@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import styles from './Phonebook';
+import PropTypes from 'prop-types';
+
+import styles from './Phonebook.module.scss';
 import Contacts from './Contacts';
 import AddContact from './AddContact';
 import Filter from './Filter';
@@ -15,12 +17,21 @@ class Phonebook extends Component {
     filter: '',
   };
 
+  static propTypes = {
+    contacts: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        number: PropTypes.string.isRequired,
+      }).isRequired,
+    ),
+    filter: PropTypes.string,
+  };
+
   handleAddContact = ({ id, name, number }) => {
     const { contacts } = this.state;
-    const filterLC = name.toLowerCase();
-    const res = this.getFilteredContacts(filterLC, contacts);
-    console.log(res);
-    if (res) {
+
+    if (contacts.find(contact => name.toLowerCase() === contact.name.toLowerCase())) {
       alert(`${name} is alredy in contacts`);
     } else {
       this.setState({
@@ -31,6 +42,12 @@ class Phonebook extends Component {
 
   handleOnFiler = event => {
     this.setState({ filter: event.target.value });
+  };
+
+  handleDeleteContact = id => {
+    this.setState(previousState => ({
+      contacts: previousState.contacts.filter(contactItem => contactItem.id !== id),
+    }));
   };
 
   getFilteredContacts(filterLC, contacts) {
@@ -49,11 +66,11 @@ class Phonebook extends Component {
 
     return (
       <div className={styles.componenet}>
-        <h1>Phonebook</h1>
+        <h1 className={styles.title}>Phonebook</h1>
         <AddContact onSubmit={this.handleAddContact} />
+        <h2 className={styles.title}>Contacts</h2>
         <Filter filter={filter} onChange={this.handleOnFiler} />
-        <h2>Contacts</h2>
-        <Contacts contctsList={contacts} />
+        <Contacts contctsList={contacts} onDelete={this.handleDeleteContact} />
       </div>
     );
   }
